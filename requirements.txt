@@ -1,0 +1,6 @@
+PyAutoGUI==0.9.53
+pytesseract==0.3.10
+aioschedule==0.5.2
+aiogram==2.25.1
+Pillow==9.4.0
+python-dotenv==1.0.0
