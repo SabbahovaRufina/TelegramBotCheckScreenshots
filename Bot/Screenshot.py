@@ -1,8 +1,7 @@
 import pyautogui
 from pytesseract import pytesseract
 from PIL import Image, ImageEnhance
-from typing import List
-from config import HIGH, WIDTH
+from config import HIGH, WIDTH, REG_EXP
 import re
 
 
@@ -13,26 +12,20 @@ class Screenshot:
     async def get_screenshot(self):
         pyautogui.screenshot(self.path)
 
-    async def get_text_from_screenshot(self) -> List[str]:
+    async def get_text_from_screenshot(self) -> str:
         with Image.open(self.path) as img:
             img = img.resize((WIDTH, HIGH))
             img = ImageEnhance.Contrast(img)
             img = img.enhance(2)
-            return pytesseract.image_to_string(img, lang='rus').split()
+            return pytesseract.image_to_string(img, lang='rus').lower()
 
     @staticmethod
-    async def make_regular(*words: str) -> str:
-        return '|'.join(words)
-
-    @staticmethod
-    async def is_reg_exp_in_words(words: List[str], regex: str) -> bool:
-        for word in words:
-            if re.search(regex, word):
-                return True
+    async def is_reg_exp_in_words(text: str, regex: str) -> bool:
+        if re.search(regex, text):
+            return True
         return False
 
-    async def is_right(self) -> bool:
-        screenshot_words = await self.get_text_from_screenshot()
-        regex = await self.make_regular('^погиб')
-        return await self.is_reg_exp_in_words(screenshot_words, regex)
+    async def is_right(self, regex=REG_EXP.lower()) -> bool:
+        text = await self.get_text_from_screenshot()
+        return await self.is_reg_exp_in_words(text, regex)
 
