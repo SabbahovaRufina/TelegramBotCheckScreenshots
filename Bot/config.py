@@ -15,7 +15,7 @@ PATH_SCHEDULE_SCREENSHOT = r"screenshots\scheduler_screen.png"
 INTERVAL_TIME = 1
 
 # кол-во рабочих столов
-DESKS = 1
+DESKS = 2
 
 # регулярное выражение
 REG_EXP = r"(вы погиб?)|(погиб)"
