@@ -3,13 +3,13 @@ import asyncio
 import aioschedule
 import main_functions as mf
 from config import INTERVAL_TIME
-import os
+from os import environ
 from dotenv import load_dotenv
 from keyboard import markup
 
 
 load_dotenv()
-bot = Bot(token=os.environ['TOKEN'])
+bot = Bot(token=environ['TOKEN'])
 dp = Dispatcher(bot)
 
 
