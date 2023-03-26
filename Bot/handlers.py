@@ -5,6 +5,7 @@ import main_functions as mf
 from config import INTERVAL_TIME
 import os
 from dotenv import load_dotenv
+from keyboard import markup
 
 
 load_dotenv()
@@ -16,12 +17,15 @@ async def on_startup(_):
     asyncio.create_task(scheduler())
 
 
-async def send_message(user_id, text=None, path=None):
-    if path:
-        with open(path, 'rb') as img:
-            await bot.send_photo(chat_id=user_id, photo=img)
-    if text:
-        await bot.send_message(chat_id=user_id, text=text)
+async def send_message(user_id, text=None, photo=None, document=None):
+    if photo:
+        with open(photo, 'rb') as img:
+            await bot.send_photo(chat_id=user_id, photo=img, caption=text, reply_markup=markup)
+    elif document:
+        with open(document, 'rb') as img:
+            await bot.send_document(chat_id=user_id, document=img, caption=text, reply_markup=markup)
+    elif text:
+        await bot.send_message(chat_id=user_id, text=text, reply_markup=markup)
 
 
 @dp.message_handler(commands='start')
@@ -41,7 +45,7 @@ async def process_finish(message: types.Message):
 @dp.message_handler(commands='screenshot')
 async def process_screenshot(message: types.Message):
     path = await mf.get_new_screenshot(message.chat.id)
-    await send_message(message.chat.id, path=path)
+    await send_message(message.chat.id, document=path)
     await message.delete()
 
 
