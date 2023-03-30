@@ -2,7 +2,7 @@ import pyautogui
 from pytesseract import pytesseract
 from PIL import Image, ImageEnhance
 from config import HIGH, WIDTH, REG_EXP
-import re
+from re import search
 
 
 class Screenshot:
@@ -21,7 +21,7 @@ class Screenshot:
 
     @staticmethod
     async def is_reg_exp_in_words(text: str, regex: str) -> bool:
-        if re.search(regex, text):
+        if search(regex, text):
             return True
         return False
 

@@ -36,12 +36,15 @@ async def make_screenshot(path=PATH_SCHEDULE_SCREENSHOT):
 
 async def loop_desks(desks=DESKS):
     assert desks >= 1
-    for desk in range(desks - 1):
+    for desk in range(desks):
+        if desk == 0:
+            await make_screenshot()
+            continue
         hotkey('ctrl', 'win', 'right')
-        await sleep(3)
+        await sleep(2)
         await make_screenshot()
     else:
         for _ in range(desks - 1):
-            await sleep(3)
+            await sleep(1)
             hotkey('ctrl', 'win', 'left')
 
