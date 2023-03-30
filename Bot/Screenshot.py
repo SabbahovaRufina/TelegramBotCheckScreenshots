@@ -1,4 +1,4 @@
-import pyautogui
+from pyautogui import screenshot
 from pytesseract import pytesseract
 from PIL import Image, ImageEnhance
 from config import HIGH, WIDTH, REG_EXP
@@ -10,7 +10,7 @@ class Screenshot:
         self.path = path
 
     async def get_screenshot(self):
-        pyautogui.screenshot(self.path)
+        screenshot(self.path)
 
     async def get_text_from_screenshot(self) -> str:
         with Image.open(self.path) as img:
