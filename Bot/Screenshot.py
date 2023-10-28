@@ -3,6 +3,13 @@ from pytesseract import pytesseract
 from PIL import Image, ImageEnhance
 from Bot import HIGH, WIDTH
 from re import search
+from dotenv import load_dotenv
+from os import environ
+
+
+load_dotenv()
+user = environ['USER']
+pytesseract.tesseract_cmd = rf"C:\Users\{user}\AppData\Local\Programs\Tesseract-OCR\tesseract.exe"
 
 
 class Screenshot:
