@@ -1,7 +1,7 @@
 from pyautogui import screenshot
 from pytesseract import pytesseract
 from PIL import Image, ImageEnhance
-from config import HIGH, WIDTH, REG_EXP
+from Bot import HIGH, WIDTH
 from re import search
 
 
@@ -17,7 +17,7 @@ class Screenshot:
             img = img.resize((WIDTH, HIGH))
             img = ImageEnhance.Contrast(img)
             img = img.enhance(2)
-            return pytesseract.image_to_string(img, lang='rus').lower()
+            return pytesseract.image_to_string(img, lang='rus').lower().replace('погибели', '')
 
     @staticmethod
     async def is_reg_exp_in_words(text: str, regex: str) -> bool:
@@ -25,7 +25,7 @@ class Screenshot:
             return True
         return False
 
-    async def is_right(self, regex=REG_EXP.lower()) -> bool:
+    async def is_right(self, regex) -> bool:
         text = await self.get_text_from_screenshot()
         return await self.is_reg_exp_in_words(text, regex)
 

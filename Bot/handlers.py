@@ -2,7 +2,7 @@ from aiogram import Bot, Dispatcher, executor, types
 import asyncio
 import aioschedule
 import main_functions as mf
-from config import INTERVAL_TIME
+from Bot import INTERVAL_TIME
 from os import environ
 from dotenv import load_dotenv
 from keyboard import markup
@@ -50,7 +50,7 @@ async def process_screenshot(message: types.Message):
 
 
 async def scheduler():
-    aioschedule.every(INTERVAL_TIME).minutes.do(mf.loop_desks)
+    aioschedule.every(INTERVAL_TIME).minutes.do(mf.make_screenshot)
     while True:
         await aioschedule.run_pending()
         await asyncio.sleep(1)
